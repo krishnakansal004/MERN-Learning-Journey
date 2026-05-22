@@ -1,0 +1,30 @@
+Auth system 
+chat with AI
+chat history
+message storage
+AI with internet research feature
+
+
+DATA MODELLING =>
+(USER)
+_id
+username
+email
+password
+verified or not! 
+createdAt
+updatedAt
+
+(CHAT)
+_id
+user
+title
+createdAt
+updatedAt
+
+(MESSAGES)
+_id
+chat
+content
+role:[user,ai]
+
