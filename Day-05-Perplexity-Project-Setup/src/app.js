@@ -1,6 +1,6 @@
 import express, { urlencoded } from "express";
 import cookieParser from "cookie-parser"
-import dotenv from "dotenv"
+
 import authRouter from "./routes/auth.routes.js";
 
 const app = express()

@@ -14,7 +14,7 @@ const validate = (req, res, next) => {
 }
 
 export const registerValidation = [
-    body("username").isString().withMessage("username should be string"),
+    body("username").notEmpty().withMessage("username is required"),
     body("email").isEmail().withMessage("email should be valid email address"),
     body("password").custom((value) => {
         if (value.length < 6) {
