@@ -28,3 +28,15 @@ export const registerValidation = [
     }).withMessage("password should be at least 6 characters long and contain at least one uppercase letter and one number"),
     validate
 ]
+
+export const loginValidation = [
+    body("email")
+    .trim()
+    .notEmpty().withMessage("Email is required")
+    .isEmail().withMessage("Please provide a valid email"),
+
+    body("password")
+    .notEmpty().withMessage("Password is required"),
+
+    validate
+]
