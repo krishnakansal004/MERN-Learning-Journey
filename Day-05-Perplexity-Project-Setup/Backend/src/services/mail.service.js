@@ -22,13 +22,13 @@ transporter.verify((error, success) => {
 });
 
 export async function sendEmail({ to, subject, html, text }) {
-    const mailOptions = {
-        from: process.env.GOOGLE_USER,
-        to,
-        subject,
-        html,
-        text
-    };
-    const details = await transporter.sendMail(mailOptions)
-    console.log("Email sent",details)
+  const mailOptions = {
+    from: process.env.GOOGLE_USER,
+    to,
+    subject,
+    html,
+    text,
+  };
+  const details = await transporter.sendMail(mailOptions);
+  console.log("Email sent", details);
 }

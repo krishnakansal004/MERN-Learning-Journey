@@ -102,57 +102,59 @@ export async function loginController(req, res) {
       err: "User not found",
     });
   }
-  const isPasswordMatch = await user.comparePassword(password)
+  const isPasswordMatch = await user.comparePassword(password);
 
-  if(!isPasswordMatch){
+  if (!isPasswordMatch) {
     return res.status(400).json({
-        message:"Invalid Credentials",
-        success:false,
-        err:"Incorrect Password"
-    })
+      message: "Invalid Credentials",
+      success: false,
+      err: "Incorrect Password",
+    });
   }
-  if(!user.verified){
+  if (!user.verified) {
     return res.status(400).json({
-        message:"Please Verify your email before Login",
-        success:false,
-        err:"Email not verified"
-    })
+      message: "Please Verify your email before Login",
+      success: false,
+      err: "Email not verified",
+    });
   }
-  const token = jwt.sign({
-    id:user._id,
-    username:user.username,
-    email:user.email
-  },process.env.JWT_SECRET)
+  const token = jwt.sign(
+    {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+    },
+    process.env.JWT_SECRET,
+  );
 
-  res.cookie("token",token)
+  res.cookie("token", token);
 
   return res.status(200).json({
-    message:"User logged in successfully",
-    success:true,
-    user:{
-        user:user._id,
-        email:user.email,
-        username:user.username
-    }
-  })
+    message: "User logged in successfully",
+    success: true,
+    user: {
+      user: user._id,
+      email: user.email,
+      username: user.username,
+    },
+  });
 }
 
-export async function getMeController(req,res) {
-    const userId = req.user.id;
+export async function getMeController(req, res) {
+  const userId = req.user.id;
 
-    const user = await userModel.findById(userId)
+  const user = await userModel.findById(userId);
 
-    if(!user){
-        return res.status(404).json({
-            message:"User not found",
-            success:false,
-            err:"User not found"
-        })
-    }
-    res.status(200).json({
-        message:"User details fetched successfully",
-        success:true,
-        user
-    })
-
+  if (!user) {
+    return res.status(404).json({
+      message: "User not found",
+      success: false,
+      err: "User not found",
+    });
+  }
+  res.status(200).json({
+    message: "User details fetched successfully",
+    success: true,
+    user,
+  });
 }

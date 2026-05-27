@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema(
   {
     chat: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Chat',
+      ref: "Chat",
       required: true,
     },
     content: {
@@ -14,14 +14,16 @@ const messageSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['user', 'ai'],  required: true,
-      default: 'user',
+      enum: ["user", "ai"],
+      required: true,
+      default: "user",
     },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-const messageModel = mongoose.models.Message || mongoose.model('Message', messageSchema);
+const messageModel =
+  mongoose.models.Message || mongoose.model("Message", messageSchema);
 export default messageModel;
