@@ -1,28 +1,49 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router'
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { useAuth } from "../hooks/useAuth";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router";
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const user = useSelector(state=>state.auth.user)
+  const loading = useSelector(state=>state.auth.loading)
+  const navigate = useNavigate();
+  const { handleLogin } = useAuth();
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    const payload = { email, password }
-    console.log('Login submitted', payload)
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const payload = { email, password };
+    console.log("Login submitted", payload);
     // Add login API call or navigation logic here
+    await handleLogin(payload);
+    navigate("/");
+  };
+  if(!loading&&user){
+    return <Navigate to="/" replace />
   }
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md rounded-3xl border border-slate-800 bg-slate-900/90 p-8 shadow-2xl shadow-cyan-950/20 backdrop-blur-lg">
         <div className="mb-8 text-center">
-          <p className="text-sm uppercase tracking-[0.3em] text-cyan-300/70">Welcome back</p>
-          <h1 className="mt-4 text-3xl font-semibold text-white">Sign in to your account</h1>
-          <p className="mt-2 text-sm text-slate-400">Enter your email and password to continue.</p>
+          <p className="text-sm uppercase tracking-[0.3em] text-cyan-300/70">
+            Welcome back
+          </p>
+          <h1 className="mt-4 text-3xl font-semibold text-white">
+            Sign in to your account
+          </h1>
+          <p className="mt-2 text-sm text-slate-400">
+            Enter your email and password to continue.
+          </p>
         </div>
 
-        <form className="space-y-6" onSubmit={handleSubmit}>
+        <form className="space-y-6">
           <div>
-            <label htmlFor="loginEmail" className="mb-2 block text-sm font-medium text-slate-300">
+            <label
+              htmlFor="loginEmail"
+              className="mb-2 block text-sm font-medium text-slate-300"
+            >
               Email
             </label>
             <input
@@ -38,7 +59,10 @@ const Login = () => {
           </div>
 
           <div>
-            <label htmlFor="loginPassword" className="mb-2 block text-sm font-medium text-slate-300">
+            <label
+              htmlFor="loginPassword"
+              className="mb-2 block text-sm font-medium text-slate-300"
+            >
               Password
             </label>
             <input
@@ -54,16 +78,19 @@ const Login = () => {
           </div>
 
           <button
+            onClick={handleSubmit}
             type="submit"
             className="w-full rounded-2xl bg-gradient-to-radial from-sky-500 to-cyan-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:opacity-95"
           >
             Sign In
           </button>
-          <p>Don't have an account? <Link to="/register">Click here</Link></p>
+          <p>
+            Don't have an account? <Link to="/register">Click here</Link>
+          </p>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
